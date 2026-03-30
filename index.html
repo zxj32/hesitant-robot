@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>The Hesitant Robot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Demo mode banner (hidden by default, shown by JS when no API key) -->
+  <div id="demo-banner" class="demo-banner hidden">
+    🎮 Demo Mode — responses are pretend!
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <h1 class="title">The Hesitant Robot</h1>
+    <p class="subtitle">Can you stump the robot? Draw something or ask a tricky question!</p>
+
+    <!-- Mode tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-mode="drawing">
+        🎨 Draw Something
+      </button>
+      <button class="tab-btn" data-mode="question">
+        ❓ Ask a Question
+      </button>
+    </div>
+  </header>
+
+  <main class="main-layout">
+
+    <!-- Left side: input area -->
+    <div class="input-area">
+
+      <!-- Drawing Mode -->
+      <section id="drawing-mode" class="mode-section">
+        <div class="canvas-wrapper">
+          <canvas id="drawing-canvas" width="512" height="512"></canvas>
+        </div>
+
+        <!-- Drawing toolbar -->
+        <div class="toolbar">
+          <div class="color-picker">
+            <button class="color-btn active" data-color="#2D3748" style="background:#2D3748" title="Black"></button>
+            <button class="color-btn" data-color="#FF5252" style="background:#FF5252" title="Red"></button>
+            <button class="color-btn" data-color="#4A90D9" style="background:#4A90D9" title="Blue"></button>
+            <button class="color-btn" data-color="#4CAF50" style="background:#4CAF50" title="Green"></button>
+            <button class="color-btn" data-color="#FFC107" style="background:#FFC107" title="Yellow"></button>
+            <button class="color-btn" data-color="#9C27B0" style="background:#9C27B0" title="Purple"></button>
+          </div>
+          <div class="tool-buttons">
+            <button class="tool-btn" id="btn-thin" title="Thin brush">✏️ Thin</button>
+            <button class="tool-btn active" id="btn-thick" title="Thick brush">🖌️ Thick</button>
+            <button class="tool-btn" id="btn-undo" title="Undo last stroke">↩️ Undo</button>
+            <button class="tool-btn" id="btn-clear" title="Clear canvas">🗑️ Clear</button>
+          </div>
+        </div>
+
+        <button class="submit-btn" id="btn-ask-drawing">
+          🤖 Ask Robot!
+        </button>
+      </section>
+
+      <!-- Question Mode -->
+      <section id="question-mode" class="mode-section hidden">
+        <p class="question-prompt">Pick a tricky question or type your own!</p>
+
+        <div class="question-grid">
+          <button class="question-btn" data-question="What color is a mirror?">What color is a mirror?</button>
+          <button class="question-btn" data-question="Is a hot dog a sandwich?">Is a hot dog a sandwich?</button>
+          <button class="question-btn" data-question="What does the number 7 smell like?">What does the number 7 smell like?</button>
+          <button class="question-btn" data-question="Who would win: a billion lions or the sun?">Who wins: a billion lions or the sun?</button>
+          <button class="question-btn" data-question="Is water wet?">Is water wet?</button>
+          <button class="question-btn" data-question="Can you think of a new color?">Can you think of a new color?</button>
+          <button class="question-btn" data-question="What was before the universe?">What was before the universe?</button>
+          <button class="question-btn" data-question="Can AI have feelings?">Can AI have feelings?</button>
+        </div>
+
+        <div class="custom-question">
+          <input
+            type="text"
+            id="question-input"
+            class="question-input"
+            placeholder="Type your own tricky question..."
+            maxlength="200"
+          >
+          <button class="submit-btn" id="btn-ask-question">
+            🤖 Ask Robot!
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Right side: robot + results -->
+    <div class="results-area">
+
+      <!-- Robot face -->
+      <div id="robot-area" class="robot-area">
+        <!-- SVG injected by robot.js -->
+      </div>
+
+      <!-- Speech bubble (welcome message) -->
+      <div id="speech-bubble" class="speech-bubble">
+        Hi! I'm Robo. Draw me something or ask a tricky question! Let's see if you can stump me!
+      </div>
+
+      <!-- Confidence chart -->
+      <div id="chart-container" class="chart-container">
+        <!-- Bars rendered by chart.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay" class="loading-overlay hidden">
+    <div class="loading-content">
+      <div class="loading-robot">🤖</div>
+      <p class="loading-text">Hmm, let me think<span class="loading-dots"></span></p>
+    </div>
+  </div>
+
+  <!-- "You Stumped Me!" badge overlay -->
+  <div id="stumped-badge" class="stumped-badge hidden">
+    <div class="stumped-content">
+      <div class="stumped-star">⭐</div>
+      <h2 class="stumped-title">You Stumped Me!</h2>
+      <p class="stumped-text">Wow, that was a tough one! Great job!</p>
+    </div>
+  </div>
+
+  <!-- Error toast -->
+  <div id="error-toast" class="error-toast hidden">
+    <span id="error-message"></span>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

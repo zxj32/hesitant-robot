@@ -15,7 +15,7 @@ An interactive web demo that visualizes how an AI "thinks." Instead of just show
 ## Tech Stack
 
 - **Frontend**: HTML + CSS + vanilla JavaScript (single-page app, no build step)
-- **AI Backend**: Claude API (Anthropic) via a lightweight proxy
+- **AI Backend**: OpenAI API (GPT-4o) via a lightweight proxy
 - **Visualization**: Canvas-based or CSS bar charts for confidence display
 - **Deployment**: Static files — easy to demo from a laptop or deploy anywhere
 
@@ -45,7 +45,7 @@ hesitant-robot/
 │   └── style.css      # All styles
 ├── js/
 │   ├── app.js         # Main app logic & UI controller
-│   ├── api.js         # Claude API communication
+│   ├── api.js         # OpenAI API communication
 │   ├── canvas.js      # Drawing canvas logic
 │   ├── chart.js       # Confidence bar chart rendering
 │   └── robot.js       # Robot face expressions
@@ -78,10 +78,12 @@ hesitant-robot/
 
 ## API Usage Notes
 
-- Use Claude API with `temperature: 1.0` to surface genuine model uncertainty.
-- Prompt Claude to return a JSON object with `{ guesses: [{ label, confidence }], reaction }`.
+- Use **OpenAI API** with model `gpt-4o` and `temperature: 1.0` to surface genuine model uncertainty.
+- API key is stored in environment variable `OPENAI_API_KEY` — **never hardcode keys in source code**.
+- Prompt the model to return a JSON object with `{ guesses: [{ label, confidence }], reaction }`.
 - Confidence values are 0–100; the prompt should instruct the model to be **honest** about uncertainty rather than always guessing confidently.
-- For drawing recognition, convert the canvas to a base64 image and send via the vision/multimodal endpoint.
+- For drawing recognition, convert the canvas to a base64 image and send via GPT-4o's vision endpoint.
+- Use `response_format: { type: "json_object" }` to ensure reliable JSON responses.
 
 ## Running the Demo
 
@@ -89,8 +91,8 @@ hesitant-robot/
 # 1. Install proxy dependencies
 cd server && npm install
 
-# 2. Set API key
-export ANTHROPIC_API_KEY=your-key-here
+# 2. Set API key (never commit this!)
+export OPENAI_API_KEY=your-key-here
 
 # 3. Start the proxy server
 node proxy.js
